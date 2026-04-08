@@ -12,7 +12,7 @@
     <div class="max-w-3xl mx-auto">
         
         <header class="text-center mb-10">
-            <h1 class="text-5xl font-bold text-indigo-600 mb-2">Jag fyller 40! 🎉</h1>
+            <h1 class="text-5xl font-bold text-indigo-600 mb-2">Susanne 40 igen! 🎉</h1>
             <p class="text-xl text-slate-600">Lördag 6 juni 2026 kl 15:00 - Öppet hus</p>
         </header>
 
@@ -57,7 +57,7 @@
             <div class="bg-green-50 border border-green-200 p-6 rounded-2xl shadow-sm text-center">
                 <h2 class="text-2xl font-bold text-green-700 mb-2">Tack för din anmälan! ✅</h2>
                 <p class="text-green-800 mb-4">Vi har noterat att <strong id="summary-guests"></strong> kommer, varav <strong id="summary-sleep"></strong> stannar över natten.</p>
-                <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                <button id="calendar-btn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                     📅 Lägg till i Kalender
                 </button>
             </div>
@@ -71,7 +71,7 @@
             <div class="bg-indigo-50 p-6 rounded-2xl shadow-sm flex flex-col md:flex-row items-center justify-between">
                 <div class="mb-4 md:mb-0 md:pr-6">
                     <h3 class="text-xl font-bold text-indigo-800 mb-2">Angående presenter 🎁</h3>
-                    <p class="text-indigo-900 text-sm">Den bästa presenten är att du kommer! Men om du ändå vill ge något, samlar vi ihop till min stora dröm: ett <strong>löpband</strong>. Swisha valfri summa så är du med på presenten!</p>
+                    <p class="text-indigo-900 text-sm">Den bästa presenten är att du kommer! Men om du ändå vill ge något, samlar vi ihop till hennes STORA DRÖM: ett <strong>löpband</strong>. Swisha valfri summa så är du med på presenten!</p>
                 </div>
                 <div class="bg-white p-4 rounded-xl shadow-md text-center shrink-0">
                     <div class="w-32 h-32 bg-slate-200 flex items-center justify-center text-xs text-slate-500 mb-2 rounded border-2 border-dashed border-slate-300">Swish QR-kod här</div>
@@ -157,6 +157,28 @@ const { data, error } = await supabaseClient // <-- Byt till supabaseClient!
             document.getElementById("countdown").innerHTML = "FESTEN HAR BÖRJAT!";
         }
     }, 1000);
+// Funktion för "Lägg till i kalender"
+document.getElementById('calendar-btn').addEventListener('click', function() {
+    // Skapar innehållet för kalenderbokningen
+    const icsData = `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:Stora 40-årsfesten! 🎉
+DTSTART;TZID=Europe/Stockholm:20260606T150000
+DTEND;TZID=Europe/Stockholm:20260607T030000
+DESCRIPTION:Dags för 40-årsfest! Kolla in webbsidan för adress och detaljer.
+END:VEVENT
+END:VCALENDAR`;
+
+    // Skapar en fil och laddar ner den
+    const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = '40-arsfest.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
 </script>
 </body>
 </html>
